@@ -3,8 +3,7 @@
 
 const http = require( 'http' );
 const fs = require('fs');
-let env = require( 'dotenv' ).config();
-require( 'dotenv-expand' )(env);
+require( 'dotenv' ).config();
 
 const port = 3000;
 const host = `localhost`;
@@ -56,3 +55,5 @@ async function tryNeo(){
     // on application exit:
     await conn.close()
 }
+
+
