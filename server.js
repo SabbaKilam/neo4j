@@ -55,4 +55,3 @@ async function tryNeo(){
     // on application exit:
     await conn.close()
 }
-
