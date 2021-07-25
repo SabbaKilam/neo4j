@@ -1,7 +1,7 @@
 {
   "name": "neo4japi",
   "version": "1.0.0",
-  "description": "",
+  "description": "small change",
   "main": "server.js",
   "scripts": {
     "start": "nodemon server.js"
