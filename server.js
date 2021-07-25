@@ -32,11 +32,11 @@ http.createServer((req, res)=>{
     console.log( `server running at http://${host}:${port}` )
 });
 
-tryNeo();
+tryNeo("Abbas");
 
-async function tryNeo(){
+async function tryNeo(name){
     const session = conn.session()
-    const personName = 'Nancy'
+    const personName = name
     
     try {
       const result = await session.run(
