@@ -55,5 +55,4 @@ async function tryNeo(){
     // on application exit:
     await conn.close()
 }
-// see if we can merge this with abbas
 
