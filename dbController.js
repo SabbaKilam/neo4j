@@ -28,8 +28,7 @@ module.exports = {
           console.error( dbError )
         }
         finally {
-          await session.close()
-          await conn.close();          
+          await session.close()          
         }
     },
     /**
