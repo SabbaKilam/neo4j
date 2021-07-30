@@ -23,12 +23,14 @@ module.exports = {
           const node = singleRecord.get(0)
         
           console.log(node.properties.name)
-        } finally {
-          await session.close()
         }
-        
-        // on application exit:
-        await conn.close();
+        catch( dbError){
+          console.error( dbError )
+        }
+        finally {
+          await session.close()
+          await conn.close();          
+        }
     },
     /**
      * 

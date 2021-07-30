@@ -14,11 +14,14 @@ const {
 const port = 3000;
 const host = `localhost`;
 
-http.createServer((req, res)=>{
 
+
+http.createServer( (req, res)=>{
+  if( req.url != '/favicon.ico'){
+    tryNeo("Abbas");
+  }
   fs.readFile('./userfiles/TheFamily.pdf', (error, content) => {
     if ( !error ){
-
       res.writeHead( 200, {'Content-Type': 'application/pdf'});
       res.end(content);
     }
@@ -28,7 +31,6 @@ http.createServer((req, res)=>{
     }
   });
 })
-.listen(port, host, () => {
-  tryNeo("Abbas");
+.listen( port, host, () => {
   console.log( `server running at http://${host}:${port}` )
 });
