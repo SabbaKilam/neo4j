@@ -4,17 +4,21 @@
 const http = require( 'http' );
 const fs = require('fs');
 require( 'dotenv' ).config();
-
 const {
   tryNeo,
-} = require('./dbController');
+  dropAllRelationsAB,
+  dropOneRelationAB,
+  relateAB
+} = require('./dbController.js');
 
 const port = 3000;
 const host = `localhost`;
 
 http.createServer((req, res)=>{
+
   fs.readFile('./userfiles/TheFamily.pdf', (error, content) => {
     if ( !error ){
+
       res.writeHead( 200, {'Content-Type': 'application/pdf'});
       res.end(content);
     }

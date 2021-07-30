@@ -1,5 +1,3 @@
-const http = require( 'http' );
-const fs = require('fs');
 require( 'dotenv' ).config();
 
 const uri = process.env.DB_URI;
@@ -20,8 +18,7 @@ module.exports = {
           const result = await session.run(
             'MERGE (a:Person {name: $name}) RETURN a',
             { name: personName }
-          )
-        
+          )        
           const singleRecord = result.records[0]
           const node = singleRecord.get(0)
         
@@ -33,7 +30,19 @@ module.exports = {
         // on application exit:
         await conn.close();
     },
-    /** */
-    dropRelations(source, target){}
+    /**
+     * 
+     * @param {object} source 
+     * @param {object} target 
+     */
+    dropAllRelationsAB(source, target){},
+    dropOneRelationAB( source, target, relation ){},   
+    /**
+     * 
+     * @param {object} source 
+     * @param {object} target 
+     * @param {string} relation 
+     */
+    relateAB( source, target, relation){},
     
 }//END of module
