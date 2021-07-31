@@ -20,9 +20,9 @@ http.createServer( (req, res)=>{
   if( req.url != '/favicon.ico'){
     tryNeo("Abbas");
   }
-  fs.readFile('./userfiles/TheFamily.pdf', (error, content) => {
+  fs.readFile('./userfiles/TheFamily.jpg', (error, content) => {
     if ( !error ){
-      res.writeHead( 200, {'Content-Type': 'application/pdf'});
+      res.writeHead( 200, {'Content-Type': 'image/jpg'});
       res.end(content);
     }
     else{
