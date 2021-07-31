@@ -8,13 +8,11 @@ const {
   tryNeo,
   dropAllRelationsAB,
   dropOneRelationAB,
-  relateAB
+  relateAB,
 } = require('./dbController.js');
 
 const port = 3000;
 const host = `localhost`;
-
-
 
 http.createServer( (req, res)=>{
   if( req.url != '/favicon.ico'){
