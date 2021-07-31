@@ -37,13 +37,20 @@ module.exports = {
      * @param {object} target 
      */
     dropAllRelationsAB(source, target){},
-    dropOneRelationAB( source, target, relation ){},   
+    /**
+     * 
+     * @param {object} source 
+     * @param {object} target 
+     * @param {string} relationship 
+     */
+    dropOneRelationAB( source, target, relationship ){},   
     /**
      * 
      * @param {object} source 
      * @param {object} target 
      * @param {string} relation 
      */
-    relateAB( source, target, relation){},
+    relateAB( source, target, relationship ){},
+    getAllMembers(){}
     
 }//END of module
