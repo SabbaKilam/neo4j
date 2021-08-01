@@ -4,10 +4,24 @@ const {
     dropAllRelationsAB,
     dropOneRelationAB,
     relateAB,
-  } = require('./dbController.js');
+    getAllMembers
+  } = require('./dbMethods.js');
 
 module.exports = {
-    getFile( url, mimeType, res ){   
+    /**
+     * 
+     * @param {object} url 
+     * @param {string} mimeType 
+     * @param {object} res 
+     * @param {boolean} loggedIn 
+     */
+    getFile( url, mimeType, res, loggedIn ){
+        if ( url == './index.html' && ! loggedIn ){
+            url = './screens/login/index.html';
+        }
+        if ( url == './index.html' && loggedIn ){
+            url = './screens/main/main.html';
+        }        
         fs.readFile( url, ( error, content ) => {
             if ( !error ){
                 res.writeHead( 200, {'Content-Type': mimeType });
@@ -19,6 +33,7 @@ module.exports = {
             }        
         });
     },
+    /** */    
     executeApi( req, res, apiStringArray ){
         console.log(apiStringArray)
         res.writeHead( 200, {'Content-Type': 'text/plain'});

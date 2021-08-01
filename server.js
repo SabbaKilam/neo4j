@@ -10,6 +10,12 @@ const {
   executeApi
 } = require('./app_modules/restMethods');
 
+const {
+  login,
+  logout,
+  getFamilyGraphic,
+} = require('./app_modules/helperMethods');
+
 const mimeTypes = {
   html: 'text/html',
   css: 'text/css',
@@ -21,18 +27,20 @@ const mimeTypes = {
   gif: 'image/gif',
   json: 'application/json',   
 };
+
 const prohibitedFiles = [
   "./server.js",
   "./package.json",
   "./",    
 ];
+
 let loggedIn = false;
 let apiStringArray = [];
 
 const port = 3000;
 const host = `localhost`;
 
-http.createServer( (req, res)=>{
+const server = http.createServer( (req, res) => {
     ////| setting up preliminaries |////
     const method = req.method;
     let url = `.${decodeURI(req.url)}`;
@@ -43,39 +51,23 @@ http.createServer( (req, res)=>{
     const mimeType = mimeTypes[extension] || 'application/octet-stream';
     const isApiRequest = url.split('/')[1].toLowerCase() == 'api';
 
-    /*
-    if( req.url != '/favicon.ico'){
-      tryNeo("Abbas");
-    }
-    */
-    console.log(`isApiRequest: ${isApiRequest}`);
     /////| calling REST functions |/////
     console.log(url.split('/'))
     if ( method == 'GET' && !isApiRequest ) {
-      getFile( url, mimeType, res )
+      getFile( url, mimeType, res, loggedIn )
     }
     else if ( method == 'GET' && isApiRequest ) {
+      // make apiStringArra...
+      //removing '.' and 'api' from the array
       apiStringArray = url.split('/').splice(2);
       executeApi( req, res, apiStringArray )
     }
     else {
       getFamilyGraphic( req, res );
     }
-})
-.listen( port, host, () => {
+});
+
+server.listen( port, host, () => {
   console.log( `server running at http://${host}:${port}` )
 });
 
-////////| helper functions |//////
-function getFamilyGraphic( req, res ){
-  fs.readFile('./userfiles/TheFamily.jpg', (error, content) => {
-    if ( !error ){
-      res.writeHead( 200, {'Content-Type': 'image/jpg'});
-      res.end(content);
-    }
-    else{
-      res.writeHead( 500, {'Content-Type': 'text/html'});
-      res.end(`<center><h1>Trouble getting info from server</h1></center>`);
-    }
-  });
-}
