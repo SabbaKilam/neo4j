@@ -4,12 +4,7 @@
 const http = require( 'http' );
 const fs = require('fs');
 require( 'dotenv' ).config();
-const {
-  tryNeo,
-  dropAllRelationsAB,
-  dropOneRelationAB,
-  relateAB,
-} = require('./app_modules/dbController.js');
+
 const {
   getFile,
   executeApi
@@ -19,14 +14,11 @@ const mimeTypes = {
   html: 'text/html',
   css: 'text/css',
   js: 'text/javascript',
-  txt: 'text/plain',
   ico: 'image/icon',
   png: 'image/png',
   jpg: 'image/jpg',
   jpeg: 'image/jpeg',
   gif: 'image/gif',
-  mp3: 'audio/mp3',
-  mp4: 'video/mp4',
   json: 'application/json',   
 };
 const prohibitedFiles = [
