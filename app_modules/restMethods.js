@@ -4,18 +4,18 @@ const {
     dropAllRelationsAB,
     dropOneRelationAB,
     relateAB,
+    getMember,
     getAllMembers
   } = require('./dbMethods.js');
 
 module.exports = {
     /**
-     * 
      * @param {object} url 
      * @param {string} mimeType 
      * @param {object} res 
      * @param {boolean} loggedIn 
      */
-    getFile( url, mimeType, res, loggedIn ){
+    getFile( {req, res, url, method, mimeType,loggedIn, isApiRequest} ){
         if ( url == './index.html' && ! loggedIn ){
             url = './screens/login/index.html';
         }
@@ -34,9 +34,24 @@ module.exports = {
         });
     },
     /** */    
-    executeApi( req, res, apiStringArray ){
+    executeApi({req, res, url, method, mimeType,loggedIn, isApiRequest}){
+        const apiStringArray = url.split('/').splice(2);
         console.log(apiStringArray)
-        res.writeHead( 200, {'Content-Type': 'text/plain'});
-        res.end(JSON.stringify(apiStringArray));
+        const dbMethodsArray = [         
+            'dropAllRelationsAB',
+            'dropOneRelationAB',
+            'relateAB',
+            'getMember',
+            'getAllMembers'
+        ];
+        if (false){}
+        else if (false) {}
+        else if (false) {}
+        else if (false) {}
+        else if (false) {}
+        else{
+            res.writeHead( 200, {'Content-Type': 'text/plain'});
+            res.end(JSON.stringify(apiStringArray));
+        } 
     },
 };

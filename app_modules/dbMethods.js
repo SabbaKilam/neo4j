@@ -36,7 +36,30 @@ module.exports = {
      * @param {object} source 
      * @param {object} target 
      */
-    dropAllRelationsAB(source, target){},
+    async dropAllRelationsAB(source, target){
+      const conn = neo4j.driver( uri, auth )
+      const session = conn.session();
+      const returnValue = null;
+      try{
+        const result = await session.run(
+          `MATCH (s:Person {email: ${source}})
+          -(r)- (t:Person {email: ${target}})
+          RETURN s, t`
+        )
+        returnValue = JSON.stringify( results.records );
+        console.log( returnValue );
+      }
+      catch(dbError){
+        console.error( dbError )
+        returnValue = dbError
+      }
+      finally{
+        await session.close()
+        await conn.close()
+        return returnValue       
+      }
+    },
+
     /**
      * @param {object} source 
      * @param {object} target 
@@ -48,7 +71,11 @@ module.exports = {
      * @param {object} target 
      * @param {string} relation 
      */
-    relateAB( source, target, relationship ){},
+    relateAB( source, target, relationship ){
+
+    },
+    getMember(){},    
     getAllMembers(){},
+
     
 }//END of module

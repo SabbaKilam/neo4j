@@ -40,7 +40,7 @@ let apiStringArray = [];
 const port = 3000;
 const host = `localhost`;
 
-const server = http.createServer( (req, res) => {
+const server = http.createServer( async (req, res) => {
     ////| setting up preliminaries |////
     const method = req.method;
     let url = `.${decodeURI(req.url)}`;
@@ -50,20 +50,44 @@ const server = http.createServer( (req, res) => {
     const extension = filename.split('.').reverse()[0].toLowerCase();
     const mimeType = mimeTypes[extension] || 'application/octet-stream';
     const isApiRequest = url.split('/')[1].toLowerCase() == 'api';
-
-    /////| calling REST functions |/////
-    console.log(url.split('/'))
-    if ( method == 'GET' && !isApiRequest ) {
-      getFile( url, mimeType, res, loggedIn )
+    const isLoginRequest = url.split('/')[1].toLowerCase() == 'login';
+    const parameters = {
+      req,
+      res,
+      url,
+      method,
+      mimeType,
+      loggedIn,
+      isApiRequest
     }
-    else if ( method == 'GET' && isApiRequest ) {
-      // make apiStringArra...
-      //removing '.' and 'api' from the array
-      apiStringArray = url.split('/').splice(2);
-      executeApi( req, res, apiStringArray )
+
+    /////| calling REST methods |/////
+    console.log(url.split('/'))
+    if ( isLoginRequest ){
+      try{
+        let newParams = await login( parameters ).then( r => r);
+
+        newParams = JSON.parse(newParams);
+        parameters.url = newParams["url"];    
+        parameters.loggedIn = newParams["loggedIn"];
+        loggedIn = newParams["loggedIn"];     
+        parameters.mimeType = "text/html";
+ 
+        getFile( parameters ) 
+      }
+      catch(error){
+        console.log(error);
+      }
+    
+    }
+    else if ( method == 'GET' && !isApiRequest ) {
+      getFile( parameters )
+    }
+    else if ( isApiRequest ) {
+      executeApi( parameters )
     }
     else {
-      getFamilyGraphic( req, res );
+      getFamilyGraphic( parameters );
     }
 });
 

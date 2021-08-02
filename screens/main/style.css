@@ -1,0 +1,19 @@
+html, body{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+body{
+    position: relative;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    overflow: hidden;
+    background-color: hsla(0, 50%, 50%, 0.5);
+}
+#btnLogout {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translate(-50%)
+}

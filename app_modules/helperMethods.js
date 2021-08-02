@@ -1,10 +1,13 @@
+const fs = require('fs');
 module.exports = {
     /** */
-    login({username, password}){},
+    async login({req, res, url, loggedIn}){
+      return JSON.stringify({loggedIn: true, url: './index.html'})
+    },
     /** */
     logout(){},
     /** */
-    getFamilyGraphic( req, res ){
+    getFamilyGraphic( {req, res} ){
     fs.readFile('./userfiles/TheFamily.jpg', (error, content) => {
       if ( !error ){
         res.writeHead( 200, {'Content-Type': 'image/jpg'});
@@ -16,8 +19,6 @@ module.exports = {
       }
     });
   },
-
-
 
 
 }// END of helpler module
