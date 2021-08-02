@@ -44,9 +44,10 @@ module.exports = {
         const result = await session.run(
           `MATCH (s:Person {email: ${source}})
           -(r)- (t:Person {email: ${target}})
+          DELETE r
           RETURN s, t`
         )
-        returnValue = JSON.stringify( results.records );
+        returnValue = JSON.stringify( result.records );
         console.log( returnValue );
       }
       catch(dbError){

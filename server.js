@@ -64,6 +64,9 @@ const server = http.createServer( async (req, res) => {
     /////| calling REST methods |/////
     console.log(url.split('/'))
     if ( isLoginRequest ){
+      console.log( `username ${req.headers.username}`)
+      console.log( `password ${req.headers.password}`)
+      
       try{
         let newParams = await login( parameters ).then( r => r);
 

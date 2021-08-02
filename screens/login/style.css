@@ -1,8 +1,20 @@
 
 body{
+    position: realtive;
     font-family: sans-serif;
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-    background-color: hsla(180, 50%, 50%, 0.5)
+    background-color: hsla(180, 50%, 50%, 0.5);
+}
+#loginForm{
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.25rem;
+    border-radius: 1rem;
+    border: 1px solid black;
+    padding: 2rem;
+
 }
