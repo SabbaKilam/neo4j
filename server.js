@@ -35,12 +35,13 @@ const prohibitedFiles = [
 ];
 
 let loggedIn = false;
+let loggedInMembers = new Array();
 let apiStringArray = [];
 
 const port = 3000;
 const host = `localhost`;
 
-const server = http.createServer( async (req, res) => {
+const server = http.createServer( (req, res) => {
     ////| setting up preliminaries |////
     const method = req.method;
     let url = `.${decodeURI(req.url)}`;
@@ -57,26 +58,36 @@ const server = http.createServer( async (req, res) => {
       url,
       method,
       mimeType,
-      loggedIn,
+      loggedInMembers,
       isApiRequest
     }
 
     /////| calling REST methods |/////
-    console.log(url.split('/'))
     if ( isLoginRequest ){
-      console.log( `username ${req.headers.username}`)
-      console.log( `password ${req.headers.password}`)
-      
-      try{
-        let newParams = await login( parameters ).then( r => r);
+      let username = req.headers.username;
+      let password = req.headers.password;
+      console.log( `username: ${username}, password:${password}` );      
+      try{        
+        login( username, password, ( response ) => {
+          if ( JSON.parse(response) === true ){
+            url = './screens/main/main.html';
+          }
+          else {
+            url = './screens/login/login.html';
+          }       
+          fs.readFile( url, ( error, content ) => {
+              if ( !error ){
+                  console.log(`Finished reading file: ${url}`)
+                  res.writeHead( 200, {'Content-Type': mimeType });
+                  res.end( content , 'utf-8');             
+              }
+              else {
+                  res.writeHead( 404, {'Content-Type': 'text/plain'} );
+                  res.end( `Trouble finding file "${url}": 404 Error.` , 'utf-8');  
+              }        
+          });
 
-        newParams = JSON.parse(newParams);
-        parameters.url = newParams["url"];    
-        parameters.loggedIn = newParams["loggedIn"];
-        loggedIn = newParams["loggedIn"];     
-        parameters.mimeType = "text/html";
- 
-        getFile( parameters ) 
+        });
       }
       catch(error){
         console.log(error);

@@ -4,13 +4,6 @@ const btnLogin = document.getElementById('btnLogin');
 const inputUsername = document.getElementById('inputUsername');
 const inputPassword = document.getElementById('inputPassword');
 
-/**
- *         <form  id="loginForm">
-            username: <input id="inputUsername"><br />
-            password: <input type="password" id="inputPassword"><br />
-            <button id="btnLogin">LOGIN</button>
-        </form>
- */
 ////| setup listeners  |/////
 btnLogin.addEventListener('click', login)
 
@@ -24,8 +17,11 @@ async function login(eo){
         }
     }
     try{
-        const result = await fetch('./login', parameters).then( r => r.json())
+        const result = await fetch('./login', parameters).then( r => r.text())
         console.log( result );
+        document.body.innerHTML = result
+
+
     }
     catch(error){}
 

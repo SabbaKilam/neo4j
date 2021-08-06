@@ -1,8 +1,9 @@
 const fs = require('fs');
 module.exports = {
     /** */
-    async login({req, res, url, loggedIn}){
-      return JSON.stringify({loggedIn: true, url: './index.html'})
+    login( username, password, callback ){
+      let response = (username != '' && password != '') ? true : false;
+      callback( JSON.stringify( response ) );
     },
     /** */
     logout(){},

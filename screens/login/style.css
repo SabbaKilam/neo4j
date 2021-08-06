@@ -16,5 +16,9 @@ body{
     border-radius: 1rem;
     border: 1px solid black;
     padding: 2rem;
+    text-align: center;
+}
 
+.loginInput{
+    margin: 0.5rem;
 }
